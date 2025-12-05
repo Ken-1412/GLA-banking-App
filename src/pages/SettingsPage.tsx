@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Sidebar from '@/components/dashboard/Sidebar';
 import PageHeader from '@/components/dashboard/PageHeader';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,10 +9,52 @@ import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { Bell, User, Lock, CreditCard, Globe, Shield } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import Logo from '@/components/ui/Logo';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function SettingsPage() {
   const { user } = useAuth();
+  const { toast } = useToast();
+  
+  const [name, setName] = useState(user?.name || '');
+  const [email, setEmail] = useState(user?.email || '');
+  const [phone, setPhone] = useState('');
+  
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleSaveProfile = () => {
+    toast({
+      title: "Profile updated",
+      description: "Your personal information has been saved successfully.",
+    });
+  };
+
+  const handleUpdatePassword = () => {
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "Error",
+        description: "New passwords do not match.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    toast({
+      title: "Password updated",
+      description: "Your password has been changed successfully.",
+    });
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+  };
+
+  const handlePaymentMethod = () => {
+    toast({
+      title: "Coming Soon",
+      description: "Payment method integration will be available shortly.",
+    });
+  };
 
   return (
     <div className="flex min-h-screen bg-muted/20 dark:bg-background">
@@ -44,18 +87,18 @@ export default function SettingsPage() {
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full name</Label>
-                    <Input id="name" defaultValue={user?.name} />
+                    <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" defaultValue={user?.email} />
+                    <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone number</Label>
-                  <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" />
+                  <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" value={phone} onChange={(e) => setPhone(e.target.value)} />
                 </div>
-                <Button>Save changes</Button>
+                <Button onClick={handleSaveProfile}>Save changes</Button>
               </CardContent>
             </Card>
 
@@ -71,18 +114,18 @@ export default function SettingsPage() {
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="space-y-2">
                     <Label htmlFor="current-password">Current password</Label>
-                    <Input id="current-password" type="password" />
+                    <Input id="current-password" type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="new-password">New password</Label>
-                    <Input id="new-password" type="password" />
+                    <Input id="new-password" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="confirm-password">Confirm password</Label>
-                    <Input id="confirm-password" type="password" />
+                    <Input id="confirm-password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                   </div>
                 </div>
-                <Button>Update password</Button>
+                <Button onClick={handleUpdatePassword}>Update password</Button>
                 <Separator />
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
@@ -141,7 +184,7 @@ export default function SettingsPage() {
                 <div className="py-8 text-center text-muted-foreground">
                   <CreditCard className="mx-auto mb-2 h-12 w-12 opacity-50" />
                   <p>No payment methods added</p>
-                  <Button variant="outline" className="mt-4">
+                  <Button variant="outline" className="mt-4" onClick={handlePaymentMethod}>
                     Add payment method
                   </Button>
                 </div>

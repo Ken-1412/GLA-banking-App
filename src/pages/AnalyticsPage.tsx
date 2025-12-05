@@ -107,11 +107,38 @@ export default function AnalyticsPage() {
           tag="Insights"
           actions={
             <>
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" className="gap-2" onClick={() => {
+                const headers = ['Date', 'Description', 'Amount', 'Type', 'Status'];
+                const csvContent = [
+                  headers.join(','),
+                  ...transactions.map(t => [
+                    new Date(t.date).toLocaleDateString(),
+                    `"${t.description}"`,
+                    t.amount,
+                    t.type,
+                    t.status
+                  ].join(','))
+                ].join('\n');
+                
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                if (link.download !== undefined) {
+                  const url = URL.createObjectURL(blob);
+                  link.setAttribute('href', url);
+                  link.setAttribute('download', 'transactions.csv');
+                  link.style.visibility = 'hidden';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }
+              }}>
                 <Download className="h-4 w-4" />
                 Export data
               </Button>
-              <Button className="gap-2 bg-gradient-to-r from-green-700 to-emerald-600">
+              <Button 
+                className="gap-2 bg-gradient-to-r from-green-700 to-emerald-600"
+                onClick={() => window.print()}
+              >
                 <Sparkles className="h-4 w-4" />
                 Generate report
               </Button>

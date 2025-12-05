@@ -1,13 +1,12 @@
 {
+  "buildCommand": "cd gla-bank-new && npm install && npm run build",
+  "outputDirectory": "gla-bank-new/dist",
+  "installCommand": "npm install",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "^(?!/api)(.*)",
       "destination": "/index.html"
     }
-  ],
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "installCommand": "npm install"
+  ]
 }
 

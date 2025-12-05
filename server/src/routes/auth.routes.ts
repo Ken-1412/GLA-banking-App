@@ -34,22 +34,22 @@ router.post('/register', async (req, res) => {
 
     await user.save();
 
-    // Generate token
-    const jwtSecret = process.env.JWT_SECRET || 'secret';
-    const token = jwt.sign(
-      { userId: user._id.toString() },
-      jwtSecret,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' } as any
-    );
+    // Generate token (require JWT_SECRET to be set at startup)
+    const jwtSecret = process.env.JWT_SECRET as string;
+    const token = jwt.sign({ userId: user._id.toString() }, jwtSecret, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' } as any);
 
+    // Return both a flat and nested response for compatibility. Frontend will prefer `user` but also accept flat fields.
     res.status(201).json({
-      message: 'User created successfully',
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name,
+      role: user.role,
       token,
       user: {
         id: user._id.toString(),
         email: user.email,
         name: user.name,
-        role: user.role
+        role: user.role,
       }
     });
   } catch (error: any) {
@@ -78,22 +78,21 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Generate token
-    const jwtSecret = process.env.JWT_SECRET || 'secret';
-    const token = jwt.sign(
-      { userId: user._id.toString() },
-      jwtSecret,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' } as any
-    );
+    // Generate token (require JWT_SECRET to be set at startup)
+    const jwtSecret = process.env.JWT_SECRET as string;
+    const token = jwt.sign({ userId: user._id.toString() }, jwtSecret, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' } as any);
 
     res.json({
-      message: 'Login successful',
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name,
+      role: user.role,
       token,
       user: {
         id: user._id.toString(),
         email: user.email,
         name: user.name,
-        role: user.role
+        role: user.role,
       }
     });
   } catch (error: any) {
@@ -104,13 +103,12 @@ router.post('/login', async (req, res) => {
 // Get current user
 router.get('/me', authenticate, async (req: any, res) => {
   try {
+    // Return a simple flat object for the current user
     res.json({
-      user: {
-        id: req.user._id.toString(),
-        email: req.user.email,
-        name: req.user.name,
-        role: req.user.role
-      }
+      id: req.user._id.toString(),
+      email: req.user.email,
+      name: req.user.name,
+      role: req.user.role
     });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

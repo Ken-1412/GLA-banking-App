@@ -2,6 +2,7 @@ import express from 'express';
 import Transaction from '../models/Transaction.model.js';
 import Account from '../models/Account.model.js';
 import { authenticate, AuthRequest } from '../middleware/auth.middleware.js';
+import { rewardsService } from '../services/rewards.service.js';
 
 const router = express.Router();
 
@@ -127,12 +128,20 @@ router.post('/:id/approve', authenticate, async (req: AuthRequest, res) => {
 
       await fromAccount.save();
       await toAccount.save();
+
+      // Trigger rewards for savings
+      if (String(toAccount.userId) === String(transaction.userId) && toAccount.type === 'savings') {
+        await rewardsService.updateQuestProgress(String(transaction.userId), 'save_amount', transaction.amount);
+      }
     } else if (transaction.type === 'receive' && transaction.toAccount) {
       // Deposit
       const toAccount = await Account.findById(transaction.toAccount);
       if (toAccount) {
         toAccount.balance += transaction.amount;
         await toAccount.save();
+
+        // Trigger rewards for deposit
+        await rewardsService.updateQuestProgress(String(transaction.userId), 'deposit_amount', transaction.amount);
       }
     } else if (transaction.type === 'withdrawal' && transaction.fromAccount) {
       // Withdrawal

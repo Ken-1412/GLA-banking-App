@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import User from '../models/User.model.js';
 import Account from '../models/Account.model.js';
 import RewardProfile from '../models/RewardProfile.model.js';
+import { ensureAdminExists } from '../utils/bootstrap.js';
 
 dotenv.config();
 
@@ -27,21 +28,8 @@ async function seed() {
     // await RewardProfile.deleteMany({});
 
     // Create admin user
-    const adminEmail = 'admin@glabank.com';
-    let admin = await User.findOne({ email: adminEmail });
-
-    if (!admin) {
-      admin = new User({
-        email: adminEmail,
-        password: 'admin123',
-        name: 'Admin User',
-        role: 'admin'
-      });
-      await admin.save();
-      console.log('✅ Created admin user:', adminEmail);
-    } else {
-      console.log('ℹ️  Admin user already exists');
-    }
+    // Create admin user (using bootstrap logic)
+    await ensureAdminExists();
 
     // Create test user
     const testEmail = 'test@glabank.com';

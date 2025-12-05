@@ -4,11 +4,16 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { BankProvider } from "./contexts/BankContext";
 import { RewardsProvider } from "./contexts/RewardsContext";
 import LoginPage from "./pages/LoginPage";
+import LandingPage from "./pages/LandingPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import AccountsPage from "./pages/AccountsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
-import AdminPage from "./pages/AdminPage";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import UserManagement from "./pages/admin/UserManagement";
+import TransactionManagement from "./pages/admin/TransactionManagement";
+import SystemSettings from "./pages/admin/SystemSettings";
 import SettingsPage from "./pages/SettingsPage";
 import RewardsPage from "./pages/RewardsPage";
 import { Toaster } from "./components/ui/toaster";
@@ -37,6 +42,11 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 function AppRoutes() {
   return (
     <Routes>
+      <Route path="/" element={
+        <PublicRoute>
+          <LandingPage />
+        </PublicRoute>
+      } />
       <Route path="/login" element={
         <PublicRoute>
           <LoginPage />
@@ -62,11 +72,20 @@ function AppRoutes() {
           <AnalyticsPage />
         </ProtectedRoute>
       } />
+      
+      {/* Admin Routes */}
       <Route path="/admin" element={
         <AdminRoute>
-          <AdminPage />
+          <AdminLayout />
         </AdminRoute>
-      } />
+      }>
+        <Route index element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="users" element={<UserManagement />} />
+        <Route path="transactions" element={<TransactionManagement />} />
+        <Route path="settings" element={<SystemSettings />} />
+      </Route>
+
       <Route path="/settings" element={
         <ProtectedRoute>
           <SettingsPage />
@@ -77,7 +96,6 @@ function AppRoutes() {
           <RewardsPage />
         </ProtectedRoute>
       } />
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }

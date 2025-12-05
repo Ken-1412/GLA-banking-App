@@ -1,0 +1,233 @@
+/* CSS-Only 3D Tier Carousel */
+.hero-3d-banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #0a0a1e;
+    background-image:
+        repeating-linear-gradient(to right, transparent 0 100px,
+            rgba(79, 70, 229, 0.1) 100px 101px),
+        repeating-linear-gradient(to bottom, transparent 0 100px,
+            rgba(79, 70, 229, 0.1) 100px 101px);
+}
+
+.hero-3d-banner::before {
+    position: absolute;
+    width: min(1400px, 90vw);
+    top: 10%;
+    left: 50%;
+    height: 90%;
+    transform: translateX(-50%);
+    content: '';
+    background: radial-gradient(ellipse at center, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 3D Slider Container */
+.tier-3d-slider {
+    position: absolute;
+    width: 200px;
+    height: 250px;
+    top: 50%;
+    left: calc(50% - 100px);
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    animation: autoRotate 30s linear infinite;
+    z-index: 2;
+}
+
+@keyframes autoRotate {
+    from {
+        transform: perspective(1000px) rotateX(-10deg) rotateY(0deg);
+    }
+
+    to {
+        transform: perspective(1000px) rotateX(-10deg) rotateY(360deg);
+    }
+}
+
+.tier-3d-slider:hover {
+    animation-play-state: paused;
+}
+
+/* Individual Tier Card Items */
+.tier-3d-item {
+    position: absolute;
+    inset: 0;
+    transform:
+        rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(450px);
+}
+
+.tier-3d-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    border: 3px solid rgba(124, 58, 237, 0.5);
+    transition: all 0.3s ease;
+}
+
+.tier-3d-item:hover img {
+    transform: scale(1.1);
+    border-color: rgba(167, 139, 250, 0.8);
+    box-shadow: 0 30px 80px rgba(124, 58, 237, 0.6);
+}
+
+/* Hero Content */
+.hero-3d-content {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    padding-bottom: 3rem;
+}
+
+.hero-3d-title {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(167, 139, 250, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.hero-3d-title::before {
+    content: attr(data-content);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 50%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    z-index: -1;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.hero-3d-author {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(10, 10, 30, 0.8);
+    border-radius: 20px;
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.hero-3d-author h2 {
+    font-size: 2rem;
+    color: #a78bfa;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.hero-3d-author p {
+    color: #e0e7ff;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+}
+
+.hero-3d-author p b {
+    color: #c7d2fe;
+    font-weight: 600;
+}
+
+/* 3D Model/Shadow Effect */
+.tier-3d-model {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.tier-3d-model::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tier-3d-slider {
+        width: 150px;
+        height: 200px;
+        left: calc(50% - 75px);
+    }
+
+    .tier-3d-item {
+        transform:
+            rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(300px);
+    }
+
+    .hero-3d-title {
+        font-size: 3rem;
+        -webkit-text-stroke: 1px rgba(167, 139, 250, 0.5);
+    }
+
+    .hero-3d-author {
+        padding: 1.5rem;
+    }
+
+    .hero-3d-author h2 {
+        font-size: 1.5rem;
+    }
+
+    .hero-3d-author p {
+        font-size: 1rem;
+    }
+}
+
+/* Navigation overlay for 3D hero */
+.hero-3d-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: linear-gradient(to bottom, rgba(10, 10, 30, 0.9) 0%, transparent 100%);
+    padding: 1rem 0;
+}

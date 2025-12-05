@@ -62,25 +62,31 @@ async function apiRequest<T>(
 // Auth API
 export const authAPI = {
   register: async (email: string, password: string, name: string) => {
-    const data = await apiRequest<{ token: string; user: any }>('/auth/register', {
+    const data = await apiRequest<any>('/auth/register', {
       method: 'POST',
       body: JSON.stringify({ email, password, name }),
     });
-    if (data.token) setToken(data.token);
+    // Support both flat responses { id,name,email,token } and nested { user: {..}, token }
+    const token = data.token || (data.user && data.user.token) || null;
+    if (token) setToken(token);
     return data;
   },
 
   login: async (email: string, password: string) => {
-    const data = await apiRequest<{ token: string; user: any }>('/auth/login', {
+    const data = await apiRequest<any>('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
-    if (data.token) setToken(data.token);
+    const token = data.token || (data.user && data.user.token) || null;
+    if (token) setToken(token);
     return data;
   },
 
   getMe: async () => {
-    return apiRequest<{ user: any }>('/auth/me');
+    // `/auth/me` may return a flat user object or { user: {...} }
+    const data = await apiRequest<any>('/auth/me');
+    if (data.user) return data.user;
+    return data;
   },
 };
 
@@ -206,6 +212,12 @@ export const adminAPI = {
 
   approveTransaction: async (id: string) => {
     return apiRequest<any>(`/admin/transactions/${id}/approve`, {
+      method: 'POST',
+    });
+  },
+
+  rejectTransaction: async (id: string) => {
+    return apiRequest<any>(`/admin/transactions/${id}/reject`, {
       method: 'POST',
     });
   },

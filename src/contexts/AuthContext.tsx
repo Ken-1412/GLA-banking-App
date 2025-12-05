@@ -31,12 +31,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const token = localStorage.getItem('auth_token');
         if (token) {
           const response = await authAPI.getMe();
-          setUser({
-            id: response.user.id,
-            email: response.user.email,
-            name: response.user.name,
-            role: response.user.role
-          });
+          // `getMe` may return either a flat user object or { user: {...} }
+          const u = (response && response.id) ? response : (response && response.user) ? response.user : null;
+          if (u) {
+            setUser({
+              id: u.id || u._id?.toString() || '',
+              email: u.email,
+              name: u.name,
+              role: u.role || 'user'
+            });
+          }
         }
       } catch (error) {
         // Token invalid or expired

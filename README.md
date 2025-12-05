@@ -1,163 +1,107 @@
-💳 Online Banking System
+# GlaBank - Modern Banking Application
+
+![GlaBank Landing Page](docs/images/landing-page.png)
+
+GlaBank is a next-generation banking platform designed to provide a seamless, secure, and visually stunning financial experience. Built with modern web technologies, it features a 3D interactive landing page, a comprehensive dashboard for tracking finances, and robust security settings.
+
+## 🚀 Features
 
-An Online Banking Web Application built using the MERN stack (MongoDB, Express.js, React.js, Node.js) that allows users to manage their finances securely and conveniently. The platform enables account creation, fund transfers, transaction history tracking, and profile management — all with a clean and intuitive interface.
+-   **Immersive Landing Page**: Features a 3D card carousel and parallax effects for a premium first impression.
+-   **Comprehensive Dashboard**:
+    -   **Analytics**: Visualize spending, income, and savings with interactive charts.
+    -   **Transaction History**: View and filter transactions.
+    -   **Export & Reports**: Download transaction data as CSV or generate printable PDF reports.
+-   **Secure Authentication**:
+    -   User registration and login with secure password validation.
+    -   Premium dark-themed authentication pages.
+-   **User Settings**:
+    -   Profile management (Name, Email, Phone).
+    -   Security settings (Password update).
+    -   Notification preferences.
+-   **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices.
 
-🚀 Features
+## 🛠️ Tech Stack
 
-✅ User Authentication
+-   **Frontend**: React, TypeScript, Vite
+-   **Styling**: Tailwind CSS, CSS Modules
+-   **Backend**: Node.js, Express
+-   **Database**: MongoDB (Local & Atlas support)
+-   **UI Components**: Radix UI, Lucide React, Recharts
+-   **Animations**: Framer Motion, React Spring
 
-Secure Login & Signup with JWT-based authentication
+## 📸 Screenshots
 
-Password encryption using bcrypt
+### Login Page
+![Login Page](docs/images/login-page.png)
 
-Role-based access control (Admin / User)
+## 🏁 Getting Started
 
-✅ Dashboard
+Follow these instructions to set up the project locally.
 
-Personalized user dashboard displaying balance and recent transactions
+### Prerequisites
 
-Real-time updates for account data
+-   **Node.js** (v18 or higher)
+-   **MongoDB** (Local instance or Atlas connection string)
 
-✅ Banking Operations
+### Installation
 
-Deposit, Withdraw, and Transfer funds
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/yourusername/glabank.git
+    cd glabank
+    ```
 
-Track all transactions in detailed history
+2.  **Install Dependencies**
+    ```bash
+    # Install root dependencies
+    npm install
 
-Transaction receipts with timestamps
+    # Install server dependencies
+    cd server
+    npm install
+    cd ..
+    ```
 
-✅ Profile Management
+### Environment Setup
 
-Edit personal details
+1.  **Backend Configuration**
+    Create a `.env` file in the `server` directory:
+    ```env
+    PORT=5000
+    MONGODB_URI=mongodb://localhost:27017/glabank
+    JWT_SECRET=your_jwt_secret_key
+    ```
 
-Change password and update profile picture
+2.  **Frontend Configuration**
+    Create a `.env` file in the root directory:
+    ```env
+    VITE_API_URL=http://localhost:5000/api
+    ```
 
-✅ Admin Panel
+### Running the Application
 
-Manage all users and accounts
+1.  **Start the Backend**
+    Open a terminal and run:
+    ```bash
+    cd server
+    npm run dev
+    ```
+    *This will start the Express server on port 5000 and connect to MongoDB.*
 
-View and approve transactions
+2.  **Start the Frontend**
+    Open a second terminal and run:
+    ```bash
+    npm run dev
+    ```
+    *This will start the Vite development server on port 5173.*
 
-Analytics dashboard for total deposits, withdrawals, and transfers
+3.  **Access the App**
+    Open your browser and visit [http://localhost:5173](http://localhost:5173).
 
-✅ Security Features
+## 🤝 Contributing
 
-Encrypted communication (HTTPS-ready)
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Input validation and sanitization
+## 📄 License
 
-Protection against XSS, CSRF, and SQL injection
-
-🧩 Tech Stack
-Layer	Technology
-Frontend	React.js, Tailwind CSS / Bootstrap
-Backend	Node.js, Express.js
-Database	MongoDB (Mongoose ODM)
-Authentication	JWT + bcrypt
-Hosting (Optional)	Vercel / Render / Netlify / MongoDB Atlas
-🏗️ Project Setup
-🔹 Prerequisites
-
-Make sure you have the following installed:
-
-Node.js (v16+)
-
-MongoDB (local or Atlas cloud)
-
-npm or yarn
-
-🔹 Installation
-
-Clone the repository
-
-git clone https://github.com/your-username/online-banking-system.git
-cd online-banking-system
-
-
-Install dependencies
-
-npm install
-
-
-Configure environment variables
-Create a .env file in the root directory and add:
-
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-PORT=5000
-
-
-Run the server
-
-npm run server
-
-
-Run the frontend
-
-cd client
-npm install
-npm start
-
-
-Access the app
-Visit 👉 http://localhost:3000
-
-📸 Screenshots
-Login Page	Dashboard	Transaction History
-
-	
-	
-📁 Folder Structure
-Online-Banking-System/
-│
-├── client/                 # React frontend
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── context/
-│   │   └── App.js
-│   └── package.json
-│
-├── server/                 # Node.js backend
-│   ├── config/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   └── server.js
-│
-├── .env
-├── package.json
-└── README.md
-
-🧠 Future Enhancements
-
-💰 Integration with UPI / Payment Gateway APIs
-
-📱 Mobile Responsive UI (PWA support)
-
-🔔 Email & SMS notifications
-
-📊 Advanced analytics dashboard
-
-🧾 PDF statement generation
-
-🤝 Contributing
-
-Contributions are welcome!
-
-Fork the repo
-
-Create a new branch (feature/new-feature)
-
-Commit your changes
-
-Push and open a pull request 🚀
-
-🧑‍💻 Author
-
-Ketan Singh
-🔗 Codeforces
-
-💼 LinkedIn
-
-📧 ketan@example.com
+This project is licensed under the MIT License.

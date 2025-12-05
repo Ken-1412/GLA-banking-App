@@ -95,6 +95,28 @@ router.post('/transactions/:id/approve', async (req: AuthRequest, res) => {
   }
 });
 
+// Reject any transaction
+router.post('/transactions/:id/reject', async (req: AuthRequest, res) => {
+  try {
+    const transaction = await Transaction.findById(req.params.id);
+
+    if (!transaction) {
+      return res.status(404).json({ message: 'Transaction not found' });
+    }
+
+    if (transaction.status !== 'pending') {
+      return res.status(400).json({ message: 'Transaction is not pending' });
+    }
+
+    transaction.status = 'rejected';
+    await transaction.save();
+
+    res.json(transaction);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Get dashboard stats
 router.get('/stats', async (req: AuthRequest, res) => {
   try {

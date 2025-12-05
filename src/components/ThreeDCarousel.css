@@ -1,0 +1,172 @@
+/* ThreeDCarousel.css - Enhanced for Better Visual Impact */
+@import url('https://fonts.cdnfonts.com/css/ica-rubrik-black');
+@import url('https://fonts.cdnfonts.com/css/poppins');
+
+.carousel-container {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    perspective: 1200px;
+}
+
+.carousel-container .slider {
+    position: absolute;
+    width: 140px;
+    height: 200px;
+    top: 10%;
+    left: calc(50% - 70px);
+    transform-style: preserve-3d;
+    transform: perspective(1200px);
+    animation: autoRun 20s linear infinite;
+    z-index: 2;
+}
+
+/* Tier Carousel Specifics - Compact design */
+.carousel-container.tier-carousel .slider {
+    width: 140px;
+    height: 180px;
+    left: calc(50% - 70px);
+}
+
+@keyframes autoRun {
+    from {
+        transform: perspective(1200px) rotateX(-5deg) rotateY(0deg);
+    }
+
+    to {
+        transform: perspective(1200px) rotateX(-5deg) rotateY(360deg);
+    }
+}
+
+.carousel-container .slider .item {
+    position: absolute;
+    inset: 0 0 0 0;
+    transform:
+        rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(320px);
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(34, 197, 94, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Tier items - Optimized spacing */
+.carousel-container.tier-carousel .slider .item {
+    transform:
+        rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(330px);
+    background: rgba(20, 20, 20, 0.8);
+}
+
+.carousel-container .slider .item:hover {
+    border-color: rgba(34, 197, 94, 0.6);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(34, 197, 94, 0.3);
+    transform: translateZ(10px);
+}
+
+.carousel-container .slider .item .card-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+}
+
+.carousel-container .content {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1400px, 100vw);
+    height: max-content;
+    padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.carousel-container .content h1 {
+    font-family: 'ICA Rubrik', sans-serif;
+    font-size: 6em;
+    line-height: 1em;
+    color: #25283B;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.carousel-container .content h1::after {
+    position: absolute;
+    inset: 0 0 0 0;
+    content: attr(data-content);
+    z-index: 2;
+    -webkit-text-stroke: 2px #22c55e;
+    color: transparent;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1023px) {
+    .carousel-container .slider {
+        width: 110px;
+        height: 160px;
+        left: calc(50% - 55px);
+    }
+
+    .carousel-container .slider .item {
+        transform:
+            rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(250px);
+    }
+
+    .carousel-container.tier-carousel .slider {
+        width: 120px;
+        height: 150px;
+        left: calc(50% - 60px);
+    }
+
+    .carousel-container.tier-carousel .slider .item {
+        transform:
+            rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(280px);
+    }
+
+    .carousel-container .content h1 {
+        font-size: 4em;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .carousel-container .slider {
+        width: 90px;
+        height: 130px;
+        left: calc(50% - 45px);
+    }
+
+    .carousel-container .slider .item {
+        transform:
+            rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(180px);
+    }
+
+    .carousel-container.tier-carousel .slider {
+        width: 100px;
+        height: 130px;
+        left: calc(50% - 50px);
+    }
+
+    .carousel-container.tier-carousel .slider .item {
+        transform:
+            rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(220px);
+    }
+
+    .carousel-container .content h1 {
+        font-size: 3em;
+    }
+}

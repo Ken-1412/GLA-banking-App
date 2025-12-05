@@ -20,7 +20,12 @@ export const authenticate = async (
       return;
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as { userId: string };
+    if (!process.env.JWT_SECRET) {
+      res.status(500).json({ message: 'JWT_SECRET not configured on server' });
+      return;
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET) as { userId: string };
     const user = await User.findById(decoded.userId).select('-password');
 
     if (!user) {
