@@ -1,6 +1,11 @@
 # GlaBank - Modern Banking Application
 
-![GlaBank Landing Page](docs/images/landing-page.png)
+<img width="1903" height="894" alt="image" src="https://github.com/user-attachments/assets/a46073ea-f8b8-4223-9c4b-a7bf43cdd730" />
+<img width="1872" height="831" alt="image" src="https://github.com/user-attachments/assets/5323e682-2f02-480e-8419-399105dd6cf9" />
+<img width="1880" height="884" alt="image" src="https://github.com/user-attachments/assets/675c1364-2dca-4b30-9f93-b8e6db435bdb" />
+
+
+
 
 GlaBank is a next-generation banking platform designed to provide a seamless, secure, and visually stunning financial experience. Built with modern web technologies, it features a 3D interactive landing page, a comprehensive dashboard for tracking finances, and robust security settings.
 
@@ -32,7 +37,16 @@ GlaBank is a next-generation banking platform designed to provide a seamless, se
 ## 📸 Screenshots
 
 ### Login Page
-![Login Page](docs/images/login-page.png)
+<img width="1911" height="890" alt="image" src="https://github.com/user-attachments/assets/21ee55b2-c695-4eb0-adf0-61203526d833" />
+<img width="1919" height="879" alt="image" src="https://github.com/user-attachments/assets/c083431e-45db-4016-8549-8433ad11daa6" />
+<img width="1898" height="899" alt="image" src="https://github.com/user-attachments/assets/548265a7-0399-43c9-bf83-47cb9df6029a" />
+<img width="1900" height="911" alt="image" src="https://github.com/user-attachments/assets/b462ae27-7a0f-48e3-bff5-b17b25ed2a26" />
+<img width="1912" height="891" alt="image" src="https://github.com/user-attachments/assets/4fb41724-c0e7-430f-b331-9b6693c265f7" />
+
+
+
+
+
 
 ## 🏁 Getting Started
 
@@ -97,6 +111,7 @@ Follow these instructions to set up the project locally.
 
 3.  **Access the App**
     Open your browser and visit [http://localhost:5173](http://localhost:5173).
+    deployed prortotype :- https://gla-banking-app-frontend.vercel.app/
 
 ## 🤝 Contributing
 
